@@ -8,8 +8,9 @@
 
 #import "ViewController.h"
 
-@interface ViewController ()
-@property (weak, nonatomic) IBOutlet UITextField *twitterTextField;
+@interface ViewController () <UITextViewDelegate>
+@property (weak, nonatomic) IBOutlet UITextView *twitterTextField;
+@property (weak, nonatomic) IBOutlet UILabel *howMany;
 
 @end
 
@@ -17,27 +18,61 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view, typically from a nib.
+    self.twitterTextField.delegate = self;
 }
+
+
+- (void) textViewDidChange:(UITextView *)textView {
+    NSInteger wordcount = self.twitterTextField.text.length;
+    self.howMany.text = [NSString stringWithFormat:@"characters: %li",wordcount];
+  /*  if (wordcount > 139) {
+        NSString * last = [self.twitterTextField.text characterAtIndex:140];
+        }*/
+    }
+
+- (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text
+{
+    if([text length] == 0)
+    {
+        if(self.twitterTextField.text.length != 0)
+        {
+            return YES;
+        }
+        else {
+            return NO;
+        }
+    }
+    else if(self.twitterTextField.text.length > 139)
+    {
+        return NO;
+    }
+    return YES;
+    
+}
+
+- (IBAction)hashTag:(id)sender {
+    NSString * hashtagword = self.twitterTextField.text;
+    NSMutableString * resulthashword = [NSMutableString new];
+    
+/*    for (int i =0; <#condition#>; <#increment#>) {
+        <#statements#>
+    }*/
+}
+
+
+
+
 
 
 - (IBAction)twitterize:(id)sender {
-    NSMutableString *twitterizePhrase = [NSMutableString new];
-    //NSUInteger length = self.twitterTextField.text.length;
-    NSString *phrase = self.twitterTextField.text;
-    NSCharacterSet *vowels = [NSCharacterSet characterSetWithCharactersInString:@"AEIOUaeiou"];
-    NSCharacterSet *invalidVowels = [vowels invertedSet];
-    NSRange searchRange = NSMakeRange(0, phrase.length);
-    NSRange foundRange = [phrase rangeOfCharacterFromSet:invalidVowels];
-    //NSRange range = [phrase rangeOfString:@"a"];
-//    //for (int i = 0; i < length; i++)
-//    {
-//        if ([phrase characterAtIndex:i] = )
-//        {
-//            [phrase stringByReplacingOccurrencesOfString:@"a"withString:@""];
-//        }
-//    }
-    
+
+    NSString *s = self.twitterTextField.text;
+    NSCharacterSet *doNotWant = [NSCharacterSet characterSetWithCharactersInString:@"AEIOUaeiou"];
+    s = [[s componentsSeparatedByCharactersInSet: doNotWant] componentsJoinedByString: @""];
+    NSLog(@"%@", s);
+    self.twitterTextField.text = [NSString stringWithFormat:@"%@", s];
 }
+    
+
 
 @end
