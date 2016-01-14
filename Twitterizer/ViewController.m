@@ -51,11 +51,59 @@
 }
 
 - (IBAction)hashTag:(id)sender {
-    NSString * hashtagword = self.twitterTextField.text;
-    NSMutableString * resulthashword = [NSMutableString new];
+    NSString * hashTagWord = self.twitterTextField.text;
+    NSMutableString * resultHashWord = [NSMutableString new];
+    NSInteger length = self.twitterTextField.text.length;
     
-/*    for (int i =0; <#condition#>; <#increment#>) {
-        <#statements#>
+    NSMutableArray *newArray = [NSMutableArray new];
+    NSArray *hashTagArray = [self.twitterTextField.text componentsSeparatedByCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
+    hashTagArray = [hashTagArray filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"SELF != ''"]];
+    
+    for (int i = 0; i < hashTagArray.count; i++) {
+        if (i%2==1 && [[hashTagArray objectAtIndex:i] characterAtIndex:0] != '#') {
+            //creating a new object with #
+            NSString *hashedWord = [NSString stringWithFormat:@"#%@", [hashTagArray objectAtIndex:i]];
+            //add object to newArray
+            [newArray addObject:hashedWord];
+        }
+        else {
+            [newArray addObject:[hashTagArray objectAtIndex:i]];
+        }
+    }
+    NSString *finalString = [newArray componentsJoinedByString:@" "];
+    self.twitterTextField.text = finalString;
+
+    
+    
+    
+    /*NSArray *hashTagArray = [self.twitterTextField.text componentsSeparatedByString:@" "];
+    
+    int i = 1;
+    for (NSArray *word in hashTagArray) {
+        if (i == even) {
+            
+        }
+        else if (i == odd) {
+            // do stuff here
+        }
+        i++
+    }
+   
+     
+     for (int i = 1; i < length; i++) {
+     if (i % 2 == 0) {
+     NSString *s = self.twitterTextField.text;
+     NSCharacterSet *doNotWant = [NSCharacterSet characterSetWithCharactersInString:@"AEIOUaeiou"];
+     s = [[s componentsSeparatedByCharactersInSet: doNotWant] componentsJoinedByString: @""];
+     NSLog(@"%@", s);
+     self.twitterTextField.text = [NSString stringWithFormat:@"%@", s];
+
+     
+    
+   for (int i = 0; i <length; i++ ) {
+        if ([hashtagword ]) {
+            <#statements#>
+        }
     }*/
 }
 
